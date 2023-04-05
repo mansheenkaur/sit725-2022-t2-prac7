@@ -4,17 +4,25 @@ const clickMe = () => {
 
 const submitForm = () => {
   let formData = {};
-
-  formData.first_name = $("#first_name").val();
-
-  formData.last_name = $("#last_name").val();
-
-  formData.password = $("#password").val();
-
-  formData.email = $("#email").val();
-
+  formData.title = $("#title").val();
+  formData.image = $("#image").val();
+  formData.link = $("#link").val();
+  formData.description = $("#description").val();
   console.log("Form Data Submitted: ", formData);
+  addCat(formData);
 };
+
+const addCat = (cat) => {
+  $.ajax({
+    url:'/api/cats',
+    data: cat,
+    type: 'POST',
+    success: (result) =>{
+      alert(result.message);
+      location.reload();
+    }
+  });
+}
 
 const addCards = (items) => {
   items.forEach((item) => {
@@ -34,7 +42,7 @@ const addCards = (items) => {
       item.title +
       '<i class="material-icons right">close</i></span>' +
       '<p class="card-text">' +
-      item.desciption +
+      item.description +
       "</p>" +
       "</div></div></div>";
 
@@ -43,36 +51,25 @@ const addCards = (items) => {
 };
 
 const getCats = () => {
+  var baseUrl = "http://localhost:3000";
+  $.ajaxSetup({
+    beforeSend: function (xhr, options) {
+      options.url = baseUrl + options.url;
+    },
+  });
 
-  var baseUrl = 'http://localhost:3000';
-$.ajaxSetup({
-    beforeSend: function(xhr, options) {
-        options.url = baseUrl + options.url;
+  $.get("/api/cats", (response) => {
+    if (response.statusCode === 200) {
+      addCards(response.data);
     }
-})
-
-  $.get('/api/cats',(response) => {
-    console.log(response)
-    console.log("getcats");
-      if(response.statusCode === 200){
-console.log("200")
-          addCards(response.data);
-        }
-
-  }).fail((error) => {
-    // This callback function will be called if the request fails
-    console.log(error);
-  }); 
-
+  });
 }
-
 
 $(document).ready(function () {
   $(".materialboxed").materialbox();
   $("#formSubmit").click(() => {
     submitForm();
   });
-
   getCats();
   $(".modal").modal();
 });
