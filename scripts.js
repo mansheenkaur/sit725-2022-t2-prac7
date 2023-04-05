@@ -1,19 +1,3 @@
-const cardList = [
-  {
-    title: "Kitten 2",
-    image: "images/kitten-2.jpg",
-    link: "About Kitten 2",
-    desciption: "Demo desciption about kitten 2",
-  },
-  {
-    title: "Kitten 3",
-
-    image: "images/kitten-3.jpg",
-    link: "About Kitten 3",
-    desciption: "Demo desciption about kitten 3",
-  },
-];
-
 const clickMe = () => {
   alert("Thanks for clicking me. Hope you have a nice day!");
 };
@@ -58,13 +42,37 @@ const addCards = (items) => {
   });
 };
 
+const getCats = () => {
+
+  var baseUrl = 'http://localhost:3000';
+$.ajaxSetup({
+    beforeSend: function(xhr, options) {
+        options.url = baseUrl + options.url;
+    }
+})
+
+  $.get('/api/cats',(response) => {
+    console.log(response)
+    console.log("getcats");
+      if(response.statusCode === 200){
+console.log("200")
+          addCards(response.data);
+        }
+
+  }).fail((error) => {
+    // This callback function will be called if the request fails
+    console.log(error);
+  }); 
+
+}
+
+
 $(document).ready(function () {
   $(".materialboxed").materialbox();
   $("#formSubmit").click(() => {
     submitForm();
   });
 
-  addCards(cardList);
-
+  getCats();
   $(".modal").modal();
 });
