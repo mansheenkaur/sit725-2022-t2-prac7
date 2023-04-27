@@ -32,3 +32,9 @@
 #more_vert{
     margin-left: 100px;
 }
+
+#card-section {
+display: flex;
+flex-wrap: wrap;
+}
+

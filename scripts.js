@@ -51,7 +51,7 @@ const addCards = (items) => {
 };
 
 const getCats = () => {
-  var baseUrl = "http://localhost:3000";
+  var baseUrl = "http://localhost:3001";
   $.ajaxSetup({
     beforeSend: function (xhr, options) {
       options.url = baseUrl + options.url;
