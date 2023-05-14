@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Mansheen Kaur",
   "license": "ISC",
@@ -15,5 +15,8 @@
     "mongodb": "^4.4.1",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }

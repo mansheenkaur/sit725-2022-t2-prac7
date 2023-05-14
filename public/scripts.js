@@ -1,5 +1,3 @@
-
-
 const clickMe = () => {
   alert("Thanks for clicking me. Hope you have a nice day!");
 };
@@ -53,12 +51,6 @@ const addCards = (items) => {
 };
 
 const getCats = () => {
-  var baseUrl = "http://localhost:3001";
-  $.ajaxSetup({
-    beforeSend: function (xhr, options) {
-      options.url = baseUrl + options.url;
-    },
-  });
 
   $.get("/api/cats", (response) => {
     if (response.statusCode === 200) {
@@ -67,14 +59,11 @@ const getCats = () => {
   });
 }
 
-
 // connect to the socket​
-const socket = io("http://localhost:3001");
-// const socket = io();
+const socket = io();
 socket.on('number', (msg) =>{
 console.log('Random number: ' + msg);
 })
-
 
 $(document).ready(function () {
   $(".materialboxed").materialbox();
