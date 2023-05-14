@@ -4,6 +4,8 @@ const cors = require("cors");
 require('./dbConnection');
 
 let router = require('./route/route');
+let http = require('http').createServer(app);
+let io = require('socket.io')(http);
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
@@ -15,8 +17,28 @@ app.use(
   })
 );
 
+io.on('connection', (socket) => {
+
+  console.log('the user connected');
+
+  socket.on('disconnect', () => {
+
+    console.log('user disconnected');
+
+  });
+
+  setInterval(()=>{
+
+    socket.emit('number', parseInt(Math.random()*10));
+
+  }, 1000);
+
+
+});
+
+
 var port = process.env.port || 3001;
 
-app.listen(port, () => {
+http.listen(port, () => {
   console.log("app listening to:" + port);
 });

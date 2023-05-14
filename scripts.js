@@ -1,3 +1,5 @@
+
+
 const clickMe = () => {
   alert("Thanks for clicking me. Hope you have a nice day!");
 };
@@ -64,6 +66,15 @@ const getCats = () => {
     }
   });
 }
+
+
+// connect to the socket​
+const socket = io("http://localhost:3001");
+// const socket = io();
+socket.on('number', (msg) =>{
+console.log('Random number: ' + msg);
+})
+
 
 $(document).ready(function () {
   $(".materialboxed").materialbox();
